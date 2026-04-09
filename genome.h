@@ -23,12 +23,12 @@ public:
     void print();
     void set_mRate(double val); //sets the mRate equal to val
     double get_mRate(); //returns the current mRate value
-    void mutate_gene(int index);
-    void mutate();
-    double calculate_gene_fitness(int index, Pixel targetPixel);
-    double calculate_overall_fitness(Pixel* target, int nPixels);
-    void set_pixel(int index, Pixel newPixel);
-    Pixel get_pixel(int index);
+    void mutate_gene(int index); //for each colour in the Pixel at index, generates random num 0-1
+    void mutate(); //calls mutate_gene on every Pixel in the genes array
+    double calculate_gene_fitness(int index, Pixel targetPixel); //returns average percent difference between genes[index] and targetPixel
+    double calculate_overall_fitness(Pixel* target, int nPixels); //returns average error across all pixels between genome and target array
+    void set_pixel(int index, Pixel newPixel); //sets Pixel at index to newPixel, ignores invalid index/RGB values
+    Pixel get_pixel(int index); //returns the Pixel at index
 
 
 private:

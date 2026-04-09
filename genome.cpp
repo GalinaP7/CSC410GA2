@@ -117,6 +117,7 @@ double genome::get_mRate(){
     return mRate;
 }
 
+//each colour channel independently has a chance of being randomized
 void genome::mutate_gene(int index) {
     if (index < 0 || index >= nGenes) {
         return;
@@ -138,12 +139,14 @@ void genome::mutate_gene(int index) {
     }
 }
 
+//applies mutate_gene to every Pixel in the array
 void genome::mutate() {
     for (int i = 0; i < nGenes; i++) {
         mutate_gene(i);
     }
 }
 
+// returns (produced - expected) averaged across RGB channels
 double genome::calculate_gene_fitness(int index, Pixel targetPixel) {
     double redDiff   = genes[index].red   - targetPixel.red;
     double greenDiff = genes[index].green - targetPixel.green;
@@ -152,6 +155,7 @@ double genome::calculate_gene_fitness(int index, Pixel targetPixel) {
     return (redDiff + greenDiff + blueDiff) / 3.0 / 256.0;
 }
 
+// returns average absolute error across all pixels
 double genome::calculate_overall_fitness(Pixel* target, int nPixels) {
     if (nPixels != nGenes) {
         return -1;  // size mismatch, signal error
@@ -170,6 +174,7 @@ double genome::calculate_overall_fitness(Pixel* target, int nPixels) {
     return totalError / nGenes;
 }
 
+//ignores invalid index or any RGB value outside 0-255
 void genome::set_pixel(int index, Pixel newPixel) {
     if (index < 0 || index >= nGenes) {
         return;
